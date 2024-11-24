@@ -1,4 +1,5 @@
 <?php
+require_once 'C:\laragon\www\DESARROLLO_VII_PROYECTO\config.php';
 class Database {
     // Instancia única de la clase (patrón Singleton)
     private static $instance = null;

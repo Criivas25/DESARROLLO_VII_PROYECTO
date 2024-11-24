@@ -1,25 +1,28 @@
 <?php
-
+require_once __DIR__ . '/.env'; // <-- Cambia aquí: agrega la barra antes de '.env'
 // Function to read .env file
 function loadEnv($path) {
-    if(!file_exists($path)) {
-        throw new Exception(".env file not found");
+    if (!file_exists($path)) {
+        throw new Exception(".env file not found at: " . $path);
     }
-    
+
+    // Asegúrate de no imprimir el contenido del archivo
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0) {
+        if (strpos(trim($line), '#') === 0) { // Saltar comentarios
             continue;
         }
 
-        list($name, $value) = explode('=', $line, 2);
-        $name = trim($name);
-        $value = trim($value);
-        
-        if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
-            putenv(sprintf('%s=%s', $name, $value));
-            $_ENV[$name] = $value;
-            $_SERVER[$name] = $value;
+        if (strpos($line, '=') !== false) { // Validar formato clave=valor
+            list($name, $value) = explode('=', $line, 2);
+            $name = trim($name);
+            $value = trim($value);
+
+            if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
+                putenv(sprintf('%s=%s', $name, $value));
+                $_ENV[$name] = $value;
+                $_SERVER[$name] = $value;
+            }
         }
     }
 }

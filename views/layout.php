@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo List App</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/style.css">
+    <title>Recetario</title>
+    <link rel="stylesheet" href="../public/assets/css/styles.css">
 </head>
 <body>
     <header>
-        <h1>ToDo List App</h1>
+        <nav>
+            <ul>
+                <li><a href="recetas_lista.php">Inicio</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
-        <?php echo $content; ?>
+        <?php // Aquí se incluirá el contenido de cada página ?>
     </main>
     <footer>
-        <p>&copy; 2024 ToDo List App</p>
+        <p>&copy; <?php echo date('Y'); ?> Recetario</p>
     </footer>
-    <script src="<?php echo BASE_URL; ?>/public/assets/js/main.js"></script>
 </body>
 </html>
