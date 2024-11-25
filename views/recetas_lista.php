@@ -13,16 +13,29 @@ $recetas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include 'layout.php'; ?>
 <link rel="stylesheet" href="../public/assets/css/styles.css">
-<div class="container">
+<link rel="stylesheet" href="../public/assets/css/perfil.css">
+
+<div class="recetas-container">
     <h1>Recetas Disponibles</h1>
-    <div class="recipe-grid">
-        <?php foreach ($recetas as $receta): ?>
-            <div class="recipe-card">
-                <img src="../public/assets/images/<?php echo htmlspecialchars($receta['imagen']); ?>" alt="<?php echo htmlspecialchars($receta['nombre']); ?>">
-                <h2><?php echo htmlspecialchars($receta['nombre']); ?></h2>
-                <p>Categoría: <?php echo htmlspecialchars($receta['categoria']); ?></p>
-                <a href="recetas_detalles.php?id=<?php echo $receta['id']; ?>">Ver Detalles</a>
-            </div>
-        <?php endforeach; ?>
-    </div>
+    <?php if (isset($_SESSION['mensaje'])): ?>
+        <p class="mensaje"><?= htmlspecialchars($_SESSION['mensaje']) ?></p>
+        <?php unset($_SESSION['mensaje']); ?>
+    <?php endif; ?>
+
+    <?php if (empty($recetas)): ?>
+        <p>No hay recetas disponibles.</p>
+    <?php else: ?>
+        <ul class="recetas-lista">
+            <?php foreach ($recetas as $receta): ?>
+                <li>
+                    <img src="<?= htmlspecialchars($receta['imagen']) ?>" alt="Imagen de la receta">
+                    <h2><?= htmlspecialchars($receta['nombre']) ?></h2>
+                    <a href="recetas_detalles.php?receta_id=<?= $receta['id'] ?>">Ver Detalles</a>
+                    <?php if (isset($_SESSION['usuario_id'])): ?>
+                        <a href="favoritos_agregar.php?receta_id=<?= $receta['id'] ?>" class="favoritos-boton">Agregar a Favoritos</a>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 </div>

@@ -41,6 +41,6 @@ switch ($action) {
         break;
     default:
         $tasks = $taskManager->getAllTasks();
-        require BASE_PATH . 'views/task_list.php';
+        require BASE_PATH . 'views/recetas_lista.php';
         break;
 }
