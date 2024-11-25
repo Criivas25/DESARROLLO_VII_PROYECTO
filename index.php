@@ -12,35 +12,51 @@ require_once BASE_PATH . 'config.php';
 
 // Include necessary files
 require_once BASE_PATH . 'src/Database.php';
-require_once BASE_PATH . 'src/TaskManager.php';
 require_once BASE_PATH . 'src/Task.php';
 
-// Create an instance of TaskManager
-$taskManager = new TaskManager();
+// Iniciar sesión y verificar si el usuario está logueado
+session_start();
 
-// Get the action from the URL, default to 'list' if not set
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['user_id'])) {
+    // Si no ha iniciado sesión, redirigir a login.php
+    header('Location: login/login.php');
+    exit;
+}
+
+// Obtener la acción desde la URL, por defecto es 'list'
 $action = $_GET['action'] ?? 'list';
 
-// Handle different actions
+// Manejar las diferentes acciones
 switch ($action) {
     case 'create':
+        // Crear una nueva tarea
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $taskManager->createTask($_POST['title']);
-            header('Location: ' . BASE_URL);
+            $taskManager->createTask($_POST['title']); // Asumiendo que el método 'createTask' está definido
+            header('Location: ' . BASE_URL); // Redirigir después de crear la tarea
             exit;
         }
-        require BASE_PATH . 'views/task_form.php';
+        require BASE_PATH . 'views/task_form.php'; // Mostrar el formulario para crear la tarea
         break;
+
     case 'toggle':
-        $taskManager->toggleTask($_GET['id']);
-        header('Location: ' . BASE_URL);
+        // Alternar el estado de la tarea (completar o no)
+        if (isset($_GET['id'])) {
+            $taskManager->toggleTask($_GET['id']); // Asumiendo que 'toggleTask' está definido
+            header('Location: ' . BASE_URL); // Redirigir después de cambiar el estado
+        }
         break;
+
     case 'delete':
-        $taskManager->deleteTask($_GET['id']);
-        header('Location: ' . BASE_URL);
+        // Eliminar una tarea
+        if (isset($_GET['id'])) {
+            $taskManager->deleteTask($_GET['id']); // Asumiendo que 'deleteTask' está definido
+            header('Location: ' . BASE_URL); // Redirigir después de eliminar la tarea
+        }
         break;
+
     default:
-        $tasks = $taskManager->getAllTasks();
-        require BASE_PATH . 'views/task_list.php';
+        // Mostrar la lista de tareas
+        require BASE_PATH . 'views/recetas_lista.php';
         break;
 }
