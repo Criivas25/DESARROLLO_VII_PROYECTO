@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../src/Database.php';
 
+session_start();
+
 // Obtén la instancia única de la base de datos
 $db = Database::getInstance();
 $pdo = $db->getConnection();
@@ -30,7 +32,7 @@ $recetas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <li>
                     <img src="<?= htmlspecialchars($receta['imagen']) ?>" alt="Imagen de la receta">
                     <h2><?= htmlspecialchars($receta['nombre']) ?></h2>
-                    <a href="recetas_detalles.php?receta_id=<?= $receta['id'] ?>">Ver Detalles</a>
+                    <a href="recetas_detalles.php?id=<?= $receta['id'] ?>">Ver detalles</a>
                     <?php if (isset($_SESSION['usuario_id'])): ?>
                         <a href="favoritos_agregar.php?receta_id=<?= $receta['id'] ?>" class="favoritos-boton">Agregar a Favoritos</a>
                     <?php endif; ?>

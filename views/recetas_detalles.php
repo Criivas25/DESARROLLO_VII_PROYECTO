@@ -1,5 +1,8 @@
 <?php
+//../views/recetas_detalles.php
 require_once __DIR__ . '/../src/Database.php';
+
+session_start(); // Asegura que se pueda verificar el usuario autenticado
 
 if (isset($_GET['id'])) {
     $id = (int)$_GET['id'];
@@ -30,10 +33,9 @@ if (isset($_GET['id'])) {
 <body>
 <div class="receta-detalles">
     <h1><?php echo htmlspecialchars($receta['nombre']); ?></h1>
-    <img src="/public/assets/images/<?php echo htmlspecialchars($receta['imagen']); ?>" alt="Imagen de la receta">
-    <p><strong>Ingredientes:</strong> <?php echo nl2br(htmlspecialchars($receta['ingredientes'])); ?></p>
-    <p><strong>Categoría:</strong> <?php echo htmlspecialchars($receta['categoria']); ?></p>
-    <p><strong>Descripción:</strong> <?php echo nl2br(htmlspecialchars($receta['descripcion'])); ?></p>
+    <img src="<?= htmlspecialchars($receta['imagen']) ?>" alt="Imagen de la receta">
+    <p><strong>Categoría:</strong> <?= htmlspecialchars($receta['categoria']) ?></p>
+    <p><strong>Descripción:</strong> <?= htmlspecialchars($receta['descripcion']) ?></p>
     <?php if (isset($_SESSION['usuario_id'])): ?>
         <a href="favoritos_agregar.php?receta_id=<?= $receta['id'] ?>" class="favoritos-boton">Agregar a Favoritos</a>
     <?php endif; ?>
