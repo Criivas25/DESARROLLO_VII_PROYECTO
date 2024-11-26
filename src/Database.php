@@ -5,7 +5,7 @@ class Database {
     private static $instance = null;
     // Conexión PDO
     private $conn;
-
+    
     // Constructor privado para prevenir la creación directa de objetos
     private function __construct() {
         // Creamos la conexión PDO

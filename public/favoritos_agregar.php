@@ -4,27 +4,40 @@ require_once __DIR__ . '/../src/Usuario.php';
 
 session_start();
 
-if (!isset($_SESSION['usuario_id'])) {
-    header('Location: login.php');
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../views/login.php');
     exit();
 }
 
 if (!isset($_GET['receta_id'])) {
-    header('Location: recetas_lista.php');
+    header('Location: ../views/recetas_lista.php');
     exit();
 }
 
-$usuarioId = $_SESSION['usuario_id'];
+$usuarioId = $_SESSION['user_id'];
 $recetaId = intval($_GET['receta_id']);
 
+// Crear una instancia de la clase Usuario
 $usuario = new Usuario();
-$agregado = $usuario->agregarAFavoritos($usuarioId, $recetaId);
 
-if ($agregado) {
-    $_SESSION['mensaje'] = "Receta añadida a tus favoritos.";
+// Obtener el ID de la receta desde la URL
+if (isset($_GET['receta_id'])) {
+    $recetaId = $_GET['receta_id'];
+    
+    // Agregar la receta a favoritos
+    $resultado = $usuario->agregarAFavoritos($_SESSION['user_id'], $recetaId);
+    
+    if ($resultado) {
+        // Si se agregó correctamente, redirigir al perfil
+        header("Location: ../views/recetas_lista.php");
+        exit;
+    } else {
+        // Si ya estaba en favoritos, mostrar un mensaje
+        echo "La receta ya está en tus favoritos.";
+        header("Location: ../views/recetas_lista.php");
+        exit;
+    }
 } else {
-    $_SESSION['mensaje'] = "La receta ya está en tus favoritos.";
+    echo "Receta no encontrada.";
 }
-
-header('Location: recetas_lista.php');
 exit();

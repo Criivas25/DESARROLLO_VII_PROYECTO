@@ -22,19 +22,20 @@ if (isset($_GET['id'])) {
 }
 ?>
 
+<?php include 'layout.php'; ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($receta['nombre']); ?></title>
-    <link rel="stylesheet" href="/public/assets/css/style.css">
-    <link rel="stylesheet" href="/public/assets/css/perfil.css">
 </head>
 <body>
 <div class="receta-detalles">
     <h1><?php echo htmlspecialchars($receta['nombre']); ?></h1>
     <img src="<?= htmlspecialchars($receta['imagen']) ?>" alt="Imagen de la receta">
     <p><strong>Categoría:</strong> <?= htmlspecialchars($receta['categoria']) ?></p>
+    <p><strong>Ingredientes:</strong> <?= htmlspecialchars($receta['ingredientes']) ?></p>
     <p><strong>Descripción:</strong> <?= htmlspecialchars($receta['descripcion']) ?></p>
     <?php if (isset($_SESSION['usuario_id'])): ?>
         <a href="favoritos_agregar.php?receta_id=<?= $receta['id'] ?>" class="favoritos-boton">Agregar a Favoritos</a>

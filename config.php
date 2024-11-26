@@ -40,4 +40,17 @@ define('DB_PASS', getenv('DB_PASS'));
 // Derived constants
 define('PUBLIC_URL', BASE_URL . '/public');
 
+// Variables OAuth de Google
+define('GOOGLE_CLIENT_ID', getenv('GOOGLE_CLIENT_ID'));
+define('GOOGLE_CLIENT_SECRET', getenv('GOOGLE_CLIENT_SECRET'));
+define('GOOGLE_REDIRECT_URI', getenv('GOOGLE_REDIRECT_URI'));
+define('GOOGLE_TOKEN_URL', getenv('GOOGLE_TOKEN_URL'));
+define('GOOGLE_USERINFO_URL', getenv('GOOGLE_USERINFO_URL'));
+
+define('GOOGLE_LOGIN_URL', "https://accounts.google.com/o/oauth2/auth?"
+    . "client_id=" . GOOGLE_CLIENT_ID
+    . "&redirect_uri=" . GOOGLE_REDIRECT_URI
+    . "&response_type=code"
+    . "&scope=openid%20email%20profile");
+
 // You can add more configuration settings here
